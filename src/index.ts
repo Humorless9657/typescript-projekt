@@ -1,6 +1,8 @@
 import * as dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
+import limit from 'express-rate-limit';
+import helmet from 'helmet';
 import { developerRouter } from './developer/developer.router';
 import { gameRouter } from './game/game.router';
 import { userRouter } from './user/user.router';
@@ -15,11 +17,20 @@ if (!process.env.PORT) {
 
 const PORT: number = parseInt(process.env.PORT as string, 10);
 
+const rateLimiter = limit({
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+    message: "Too many requests :)"
+});
+
 // init express
 const app = express();
 
+app.use(helmet());
 app.use(cors());
 app.use(express.json());
+app.use(rateLimiter);
+app.disable('x-powered-by');
 
 app.use('/api/devs', developerRouter);
 app.use('/api/games', gameRouter);
