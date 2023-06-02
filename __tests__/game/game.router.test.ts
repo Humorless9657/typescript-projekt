@@ -22,3 +22,40 @@ describe("Game", () => {
     });
   });
 });
+
+test('Create game', async () => {
+  const app = createServer({
+      port: 3000,
+      corsoptions: {
+      },
+      limiter: {
+        time: 1000,
+        max: 10,
+        message: 'Too many requests',
+      },
+    });
+
+    const user = {
+      id: 1,
+      username: "Jimmy",
+      password: "password",
+    };
+
+    const token = await request(app).post("/api/users/login").send(user);
+
+    const newGame = {
+      title: "Elden Ring",
+      genre: "Action RPG",
+      platform: "PlayStation 5",
+      datePublished: "2022-02-25",
+      multiplayerMode: true,
+      metacriticScore: 96,
+      developerId: 1
+  }
+
+  const res = await request(app).post('/api/games')
+  .set("Authorization", "Bearer "+token.body.accessToken)
+  .set("Content-Type", "application/json")
+  .send(newGame);
+  expect(res.status).toBe(201);
+});
