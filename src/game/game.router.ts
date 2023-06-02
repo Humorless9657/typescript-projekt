@@ -76,7 +76,7 @@ gameRouter.put('/:id', authenticateToken, body("title").isString(), body("genre"
     try {
         const game = req.body;
         const updatedGame = await GameService.updateGame(game, id);
-        return res.status(201).json(`Game ${updatedGame.title} with id: ${updatedGame.id} was successfully updated.`);
+        return res.status(200).json(`Game ${updatedGame.title} with id: ${updatedGame.id} was successfully updated.`);
     } catch {
         return res.status(500);
     }
