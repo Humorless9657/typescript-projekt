@@ -15,3 +15,4 @@
 - Utworzenie pliku bazy danych dev.db: `npx prisma db push`
 - Dodanie domyślnych danych do bazy danych z pliku seed.ts: `npx prisma db seed`
 - Uruchomienie aplikacji w trybie deweloperskim: `npm run dev`
+- Uruchomienie testów: `npm run test`
