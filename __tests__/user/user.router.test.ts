@@ -1,8 +1,8 @@
 import request from "supertest";
 import { createServer } from "../../src/server";
 
-describe("Game", () => {
-  test("Get game with id 1", async () => {
+describe("User", () => {
+  test("Login", async () => {
     const app = createServer({
       port: 3000,
       corsoptions: {},
@@ -13,12 +13,39 @@ describe("Game", () => {
       },
     });
 
-    const res = await request(app).get("/api/games/1");
-    expect(res.body).toMatchObject({
+    const newUser = {
       id: 1,
-      title: "Spider-Man",
-      genre: "Action-adventure",
-      platform: "PlayStation 4",
+      username: "Jimmy",
+      password: "password",
+    };
+
+    const res = await request(app).post("/api/users/login").send(newUser);
+
+    expect(res.status).toBe(201);
+    expect(res.body).toMatchObject({
+      accessToken: expect.any(String),
     });
+  });
+  test("Create new user", async () => {
+    const app = createServer({
+      port: 3000,
+      corsoptions: {},
+      limiter: {
+        time: 1000,
+        max: 10,
+        message: "Too many requests",
+      },
+    });
+  
+    const user = {
+      username: "JimmyTest",
+      password: "password",
+    };
+  
+    const res = await request(app)
+      .post("/api/users/signup")
+      .set("Content-Type", "application/json")
+      .send(user);
+    expect(res.status).toBe(201);
   });
 });

@@ -23,39 +23,91 @@ describe("Game", () => {
   });
 });
 
-test('Create game', async () => {
+test("Get all games", async () => {
   const app = createServer({
-      port: 3000,
-      corsoptions: {
-      },
-      limiter: {
-        time: 1000,
-        max: 10,
-        message: 'Too many requests',
-      },
-    });
+    port: 3000,
+    corsoptions: {},
+    limiter: {
+      time: 1000,
+      max: 10,
+      message: "Too many requests",
+    },
+  });
 
-    const user = {
-      id: 1,
-      username: "Jimmy",
-      password: "password",
-    };
+  const res = await request(app).get("/api/games");
+  expect(res.status).toBe(200);
+});
 
-    const token = await request(app).post("/api/users/login").send(user);
+test("Create game", async () => {
+  const app = createServer({
+    port: 3000,
+    corsoptions: {},
+    limiter: {
+      time: 1000,
+      max: 10,
+      message: "Too many requests",
+    },
+  });
 
-    const newGame = {
-      title: "Elden Ring",
-      genre: "Action RPG",
-      platform: "PlayStation 5",
-      datePublished: "2022-02-25",
-      multiplayerMode: true,
-      metacriticScore: 96,
-      developerId: 1
-  }
+  const user = {
+    id: 1,
+    username: "Jimmy",
+    password: "password",
+  };
 
-  const res = await request(app).post('/api/games')
-  .set("Authorization", "Bearer "+token.body.accessToken)
-  .set("Content-Type", "application/json")
-  .send(newGame);
+  const token = await request(app).post("/api/users/login").send(user);
+
+  const newGame = {
+    title: "Elden Ring",
+    genre: "Action RPG",
+    platform: "PlayStation 5",
+    datePublished: "2022-02-25",
+    multiplayerMode: true,
+    metacriticScore: 96,
+    developerId: 1,
+  };
+
+  const res = await request(app)
+    .post("/api/games")
+    .set("Authorization", "Bearer " + token.body.accessToken)
+    .set("Content-Type", "application/json")
+    .send(newGame);
   expect(res.status).toBe(201);
+});
+
+test("Update game 2", async () => {
+  const app = createServer({
+    port: 3000,
+    corsoptions: {},
+    limiter: {
+      time: 1000,
+      max: 10,
+      message: "Too many requests",
+    },
+  });
+
+  const user = {
+    id: 1,
+    username: "Jimmy",
+    password: "password",
+  };
+
+  const token = await request(app).post("/api/users/login").send(user);
+
+  const updateGame = {
+    title: "Elden Ring Test",
+    genre: "Action RPG",
+    platform: "PlayStation 5",
+    datePublished: "2022-02-25",
+    multiplayerMode: true,
+    metacriticScore: 96,
+	  developerId: 2
+};
+
+  const res = await request(app)
+    .put("/api/games/2")
+    .set("Authorization", "Bearer " + token.body.accessToken)
+    .set("Content-Type", "application/json")
+    .send(updateGame);
+  expect(res.status).toBe(200);
 });
