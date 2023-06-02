@@ -7,35 +7,49 @@ import { gameRouter } from './game/game.router';
 import { userRouter } from './user/user.router';
 
 type ServerConfig = {
-    port: number,
-    corsoptions: CorsOptions,
-    limiter: {
-        time: number,
-        max: number,
-        message: string
-    }
+  port: number;
+  corsoptions: CorsOptions;
+  limiter: {
+    time: number;
+    max: number;
+    message: string;
+  };
 };
-
-const startServer = ({ port, corsoptions, limiter }: ServerConfig) => {
+const createServer = ({ corsoptions, limiter }: ServerConfig) => {
     const app = express();
     app.use(helmet());
     app.use(cors(corsoptions));
     app.use(express.json());
-    app.disable('x-powered-by'); 
-
+    app.disable('x-powered-by');
+  
     app.use(limit({
-        windowMs: limiter.time,
-        max: limiter.max,
-        message: limiter.message
+      windowMs: limiter.time,
+      max: limiter.max,
+      message: limiter.message,
     }));
-
+  
     app.use('/api/devs', developerRouter);
     app.use('/api/games', gameRouter);
     app.use('/api/users', userRouter);
-
+  
+    return app;
+  };
+  
+  const startServer = ({ port, corsoptions, limiter }: ServerConfig) => {
+    const app =  createServer({
+        port: 3000, // Twój numer portu
+        corsoptions: {
+          // Opcje CORS
+        },
+        limiter: {
+          time: 1000, // Czas w ms
+          max: 10, // Maksymalna liczba żądań
+          message: 'Too many requests', // Wiadomość w przypadku przekroczenia limitu
+        },
+      });
     app.listen(port, () => {
-        console.log(`Listening on port ${port}`);
+      console.log(`Listening on port ${port}`);
     });
-};
-
-export { ServerConfig, startServer };
+  };
+  
+  export { ServerConfig, startServer,createServer };
