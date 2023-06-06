@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import { developerRouter } from './developer/developer.router';
 import { gameRouter } from './game/game.router';
 import { userRouter } from './user/user.router';
+import { steamApiRouter} from "./api/steam.api.router";
 
 type ServerConfig = {
   port: number;
@@ -31,7 +32,9 @@ const createServer = ({ corsoptions, limiter }: ServerConfig) => {
     app.use('/api/devs', developerRouter);
     app.use('/api/games', gameRouter);
     app.use('/api/users', userRouter);
-  
+
+    app.use('/api/steam', steamApiRouter);
+
     return app;
   };
   
