@@ -15,7 +15,7 @@ describe("User", () => {
 
     const newUser = {
       id: 1,
-      username: "Jimmy",
+      username: "John",
       password: "password",
     };
 
@@ -38,7 +38,7 @@ describe("User", () => {
     });
   
     const user = {
-      username: "JimmyTest",
+      username: "JohnTest",
       password: "password",
     };
   

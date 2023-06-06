@@ -49,7 +49,7 @@ test("Create new dev", async () => {
 
   const user = {
     id: 1,
-    username: "Jimmy",
+    username: "John",
     password: "password",
   };
 
@@ -81,7 +81,7 @@ test("Update dev 2", async () => {
 
   const user = {
     id: 1,
-    username: "Jimmy",
+    username: "John",
     password: "password",
   };
 

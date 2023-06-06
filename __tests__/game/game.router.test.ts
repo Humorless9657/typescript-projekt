@@ -16,9 +16,9 @@ describe("Game", () => {
     const res = await request(app).get("/api/games/1");
     expect(res.body).toMatchObject({
       id: 1,
-      title: "Spider-Man",
-      genre: "Action-adventure",
-      platform: "PlayStation 4",
+      title: "Ratchet & Clank: Rift Apart",
+      genre: "Platform",
+      platform: "PlayStation 5",
     });
   });
 });
@@ -51,7 +51,7 @@ test("Create game", async () => {
 
   const user = {
     id: 1,
-    username: "Jimmy",
+    username: "John",
     password: "password",
   };
 
@@ -88,7 +88,7 @@ test("Update game 2", async () => {
 
   const user = {
     id: 1,
-    username: "Jimmy",
+    username: "John",
     password: "password",
   };
 

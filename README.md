@@ -15,4 +15,5 @@
 - Utworzenie pliku bazy danych dev.db: `npx prisma db push`
 - Dodanie domyślnych danych do bazy danych z pliku seed.ts: `npx prisma db seed`
 - Uruchomienie aplikacji w trybie deweloperskim: `npm run dev`
-- Uruchomienie testów: `npm run test`
+- Import zależności dev: npm i --save-dev typescript supertest nodemon jest ts-jest ts-node @types/jest @types/supertest @types/express
+- Dodanie frameworka Jest do projektu: npx ts-jest config:init 
