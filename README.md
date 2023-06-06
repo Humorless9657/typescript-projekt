@@ -17,3 +17,4 @@
 - Uruchomienie aplikacji w trybie deweloperskim: `npm run dev`
 - Import zależności dev: `npm i --save-dev typescript supertest nodemon jest ts-jest ts-node @types/jest @types/supertest @types/express`
 - Dodanie frameworka Jest do projektu: `npx ts-jest config:init`
+- Uruchomienie testów `npm run test`
