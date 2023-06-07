@@ -1,17 +1,10 @@
 import request from "supertest";
 import { createServer } from "../../src/server";
+import { testConfig } from "../../src/utils/config.server";
 
 describe("User", () => {
   test("Login", async () => {
-    const app = createServer({
-      port: 3000,
-      corsoptions: {},
-      limiter: {
-        time: 1000,
-        max: 10,
-        message: "Too many requests",
-      },
-    });
+    const app = createServer(testConfig.server);
 
     const newUser = {
       id: 1,
@@ -27,15 +20,7 @@ describe("User", () => {
     });
   });
   test("Create new user", async () => {
-    const app = createServer({
-      port: 3000,
-      corsoptions: {},
-      limiter: {
-        time: 1000,
-        max: 10,
-        message: "Too many requests",
-      },
-    });
+    const app = createServer(testConfig.server);
   
     const user = {
       username: "JohnTest",

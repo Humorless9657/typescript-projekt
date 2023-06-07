@@ -26,4 +26,16 @@ const config: Config = {
     }
 };
 
-export { config };
+const testConfig: Config = {
+    server: {
+        port: 3000,
+        corsoptions: {},
+        limiter: {
+            time: 1000,
+            max: 10,
+            message: "Too many requests"
+        }
+    }
+  };
+
+export { config, testConfig };

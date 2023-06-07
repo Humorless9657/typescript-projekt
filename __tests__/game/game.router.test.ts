@@ -1,17 +1,10 @@
 import request from "supertest";
 import { createServer } from "../../src/server";
+import { testConfig } from "../../src/utils/config.server";
 
 describe("Game", () => {
   test("Get game with id 1", async () => {
-    const app = createServer({
-      port: 3000,
-      corsoptions: {},
-      limiter: {
-        time: 1000,
-        max: 10,
-        message: "Too many requests",
-      },
-    });
+    const app = createServer(testConfig.server);
 
     const res = await request(app).get("/api/games/1");
     expect(res.body).toMatchObject({
@@ -24,30 +17,14 @@ describe("Game", () => {
 });
 
 test("Get all games", async () => {
-  const app = createServer({
-    port: 3000,
-    corsoptions: {},
-    limiter: {
-      time: 1000,
-      max: 10,
-      message: "Too many requests",
-    },
-  });
+  const app = createServer(testConfig.server);
 
   const res = await request(app).get("/api/games");
   expect(res.status).toBe(200);
 });
 
 test("Create game", async () => {
-  const app = createServer({
-    port: 3000,
-    corsoptions: {},
-    limiter: {
-      time: 1000,
-      max: 10,
-      message: "Too many requests",
-    },
-  });
+  const app = createServer(testConfig.server);
 
   const user = {
     id: 1,
@@ -76,15 +53,7 @@ test("Create game", async () => {
 });
 
 test("Update game 2", async () => {
-  const app = createServer({
-    port: 3000,
-    corsoptions: {},
-    limiter: {
-      time: 1000,
-      max: 10,
-      message: "Too many requests",
-    },
-  });
+  const app = createServer(testConfig.server);
 
   const user = {
     id: 1,
@@ -105,7 +74,7 @@ test("Update game 2", async () => {
 };
 
   const res = await request(app)
-    .put("/api/games/2")
+    .put("/api/games/3")
     .set("Authorization", "Bearer " + token.body.accessToken)
     .set("Content-Type", "application/json")
     .send(updateGame);

@@ -1,17 +1,10 @@
 import request from "supertest";
 import { createServer } from "../../src/server";
+import { testConfig } from "../../src/utils/config.server";
 
 describe("Dev", () => {
   test("Get dev with id 1", async () => {
-    const app = createServer({
-      port: 3000,
-      corsoptions: {},
-      limiter: {
-        time: 1000,
-        max: 10,
-        message: "Too many requests",
-      },
-    });
+    const app = createServer(testConfig.server);
 
     const res = await request(app).get("/api/devs/1");
     expect(res.body).toMatchObject({
@@ -22,30 +15,14 @@ describe("Dev", () => {
 });
 
 test("Get all devs", async () => {
-  const app = createServer({
-    port: 3000,
-    corsoptions: {},
-    limiter: {
-      time: 1000,
-      max: 10,
-      message: "Too many requests",
-    },
-  });
+  const app = createServer(testConfig.server);
 
   const res = await request(app).get("/api/devs");
   expect(res.status).toBe(200);
 });
 
 test("Create new dev", async () => {
-  const app = createServer({
-    port: 3000,
-    corsoptions: {},
-    limiter: {
-      time: 1000,
-      max: 10,
-      message: "Too many requests",
-    },
-  });
+  const app = createServer(testConfig.server);
 
   const user = {
     id: 1,
@@ -69,15 +46,7 @@ test("Create new dev", async () => {
 });
 
 test("Update dev 2", async () => {
-  const app = createServer({
-    port: 3000,
-    corsoptions: {},
-    limiter: {
-      time: 1000,
-      max: 10,
-      message: "Too many requests",
-    },
-  });
+  const app = createServer(testConfig.server);
 
   const user = {
     id: 1,
