@@ -8,14 +8,18 @@ export class SteamApiService {
     }
 
     public async getGameById(gameId: number): Promise<any> {
-        const gameUrl = `https://store.steampowered.com/api/appdetails?appids=${gameId}`;
+        const gameUrl = this.apiUrl + gameId;
 
         try {
             const response: AxiosResponse = await axios.get(gameUrl);
-            const responseData = response.data[gameId]['data']
-            //
+            if (response.data[gameId]['success'] === false) {
+                return false;
+            }
+            const responseData = response.data[gameId]['data'];
             const selectedData = {
                 name: responseData.name,
+                pc_requirements: responseData.pc_requirements,
+                languages: responseData.supported_languages
             };
             return selectedData;
         } catch (error) {

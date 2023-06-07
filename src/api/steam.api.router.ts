@@ -1,9 +1,8 @@
 import express from 'express';
 import type {Request, Response} from 'express';
-import {body, validationResult} from 'express-validator';
 import {SteamApiService} from './steam.api.service';
 
-const apiService = new SteamApiService('https://store.steampowered.com/api/');
+const apiService = new SteamApiService('https://store.steampowered.com/api/appdetails?appids=');
 const steamApiRouter = express.Router();
 
 // GET: A single Game from Steam by Id
