@@ -16,6 +16,7 @@ type ServerConfig = {
     message: string;
   };
 };
+
 const createServer = ({ corsoptions, limiter }: ServerConfig) => {
     const app = express();
     app.use(helmet());
@@ -32,27 +33,16 @@ const createServer = ({ corsoptions, limiter }: ServerConfig) => {
     app.use('/api/devs', developerRouter);
     app.use('/api/games', gameRouter);
     app.use('/api/users', userRouter);
-
     app.use('/api/steam', steamApiRouter);
 
     return app;
   };
   
   const startServer = ({ port, corsoptions, limiter }: ServerConfig) => {
-    const app =  createServer({
-        port: 3000, // Twój numer portu
-        corsoptions: {
-          // Opcje CORS
-        },
-        limiter: {
-          time: 1000, // Czas w ms
-          max: 10, // Maksymalna liczba żądań
-          message: 'Too many requests', // Wiadomość w przypadku przekroczenia limitu
-        },
-      });
+    const app =  createServer({ port, corsoptions, limiter });
     app.listen(port, () => {
       console.log(`Listening on port ${port}`);
     });
   };
   
-  export { ServerConfig, startServer,createServer };
+  export { ServerConfig, startServer, createServer };
